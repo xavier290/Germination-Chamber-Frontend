@@ -1,13 +1,15 @@
-import './App.css';
+import './styling/main.scss';
 
+import Login from "./pages/login";
 
 
 function App() {
   return (
-    <div className="App">
-        
+    <div className="container">
+      <Login />
     </div>
   );
 }
+
 
 export default App;

@@ -1,0 +1,13 @@
+
+
+@mixin respond-tablet {
+    @media (max-width: 768px) {
+        @content;
+    }
+}
+
+@mixin respond-phone {
+    @media (max-width: 550px) {
+        @content;
+    }
+}
