@@ -1,26 +1,27 @@
-// lets do a basic login page
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 import Logo from '../images/logo2.png';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-
-        const response = await fetch('https://dolphin-app-hlqw2.ondigitalocean.app/api/auth/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email, password })
-        });
-
-        const data = await response.json();
-        console.log(data);
-   }
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        try {
+          const response = await axios.post('https://squid-app-ht2cp.ondigitalocean.app/api/auth/login', { email, password });
+          localStorage.setItem('token', response.data.token);
+          localStorage.setItem('name', response.data.name);
+          navigate('/dashboard');
+        } 
+        catch (error) {
+          console.error('Login failed', error);
+          // Handle login failure (e.g., show error message)
+        }
+    };
     
     return (
         <div className='LoginSection'>
@@ -29,7 +30,7 @@ const Login = () => {
                 <p>SmartClimate</p>
             </div>
             <div className="pageContent">
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleLogin}>
                     <h1>Iniciar Sesión</h1>
                     
                     <label htmlFor="correo" id='text'>Correo</label>

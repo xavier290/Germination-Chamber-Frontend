@@ -1,0 +1,65 @@
+.ParametersPage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    form {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        h1 {
+            margin-bottom: 30px;
+        }
+
+        label {
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+        }
+        .temp {
+            margin-bottom: 20px;
+        }
+
+        .temp, .hum {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+
+            input {
+                width: 48%;
+                font-size: 1rem;
+                padding: 8px;
+            }
+        }
+
+        .btns {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            margin-top: 20px;
+
+            button {
+                font-size: 1rem;
+                padding: 8px;
+                margin: 5px;
+                width: 44%;
+                cursor: pointer;
+            }
+
+            .cancel {
+                background-color: red;
+                color: white;
+                border: none;
+            }
+
+            .save {
+                background-color: #40A2E3;
+                color: white;
+                border: none;
+            }
+        }
+    }
+}
