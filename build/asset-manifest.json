@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/Germination-Chamber-Frontend/static/css/main.cf8be057.css",
-    "main.js": "/Germination-Chamber-Frontend/static/js/main.de4f7d02.js",
+    "main.js": "/Germination-Chamber-Frontend/static/js/main.2bd8cfe0.js",
     "static/js/453.4bbec95f.chunk.js": "/Germination-Chamber-Frontend/static/js/453.4bbec95f.chunk.js",
     "static/media/logo2.png": "/Germination-Chamber-Frontend/static/media/logo2.0770a161bb7b4fa0b8da.png",
     "index.html": "/Germination-Chamber-Frontend/index.html",
     "main.cf8be057.css.map": "/Germination-Chamber-Frontend/static/css/main.cf8be057.css.map",
-    "main.de4f7d02.js.map": "/Germination-Chamber-Frontend/static/js/main.de4f7d02.js.map",
+    "main.2bd8cfe0.js.map": "/Germination-Chamber-Frontend/static/js/main.2bd8cfe0.js.map",
     "453.4bbec95f.chunk.js.map": "/Germination-Chamber-Frontend/static/js/453.4bbec95f.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.cf8be057.css",
-    "static/js/main.de4f7d02.js"
+    "static/js/main.2bd8cfe0.js"
   ]
 }

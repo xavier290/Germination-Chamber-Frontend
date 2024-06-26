@@ -1,13 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import Logo from '../images/logo2.png';
 
+
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+
+    // Check if user is already logged in
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            navigate('/dashboard'); // Redirect to dashboard if token exists
+        }
+    }, [navigate]);
 
     const handleLogin = async (e) => {
         e.preventDefault();
