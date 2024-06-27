@@ -26,6 +26,7 @@ const Dashboard = () => {
   const [temperatureHistory, setTemperatureHistory] = useState([]);
   const [humidityHistory, setHumidityHistory] = useState([]);
   const [lightStatus, setLightStatus] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const endpoints = {
     temperature: 'https://squid-app-ht2cp.ondigitalocean.app/api/temperature/latest',
@@ -37,12 +38,17 @@ const Dashboard = () => {
 
   const fetchData = async (selection) => {
     try {
+      setLoading(true);
       const response = await axios.get(endpoints[selection]);
       setData(response.data.Payload);
       setError(null);
-    } catch (err) {
+    } 
+    catch (err) {
       setError(`Failed to fetch ${selection} data`);
       setData(null);
+    } 
+    finally {
+      setLoading(false);
     }
   };
 
@@ -148,6 +154,7 @@ const Dashboard = () => {
         currentSelection={currentSelection}
         data={data}
         todayDate={todayDate}
+        loading={loading}
         handleLeftClick={handleLeftClick}
         handleRightClick={handleRightClick}
       />

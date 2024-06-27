@@ -7,18 +7,18 @@ import Sun from '../images/sun.png';
 import Header from './Header';
 
 
-const MainInfo = ({ currentSelection, data, todayDate, handleLeftClick, handleRightClick }) => (
+const MainInfo = ({ currentSelection, data, todayDate, loading, handleLeftClick, handleRightClick }) => (
   <div className="main-info">
     <Header />
     <main>
       <div className="info">
         <button onClick={handleLeftClick}>‹</button>
-        {data !== null ? (
+        {!loading && data !== null ? (
           <span>
             {currentSelection === 'temperature' ? ` Temperatura: ${data}ºC` : ` Humedad: ${data}%`}
           </span>
         ) : (
-          <p>Loading...</p>
+          <p>Cargando...</p>
         )}
         <button onClick={handleRightClick}>›</button>
       </div>
