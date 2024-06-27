@@ -33,7 +33,8 @@ const Dashboard = () => {
     humidity: 'https://squid-app-ht2cp.ondigitalocean.app/api/humidity/latest',
     temperatureHistory: 'https://squid-app-ht2cp.ondigitalocean.app/api/temperature/',
     humidityHistory: 'https://squid-app-ht2cp.ondigitalocean.app/api/humidity/',
-    lightStatus: 'https://squid-app-ht2cp.ondigitalocean.app/api/parameters/666d9c0df2c9716c9211a35f',
+    lightStatus: 'https://squid-app-ht2cp.ondigitalocean.app/api/parameters/info/666d9c0df2c9716c9211a35f',
+    uptLightStatus: 'https://squid-app-ht2cp.ondigitalocean.app/api/parameters/666d9c0df2c9716c9211a35f',
   };
 
   const fetchData = async (selection) => {
@@ -86,11 +87,12 @@ const Dashboard = () => {
     try {
       const newStatus = !lightStatus;
       const newHoursLuminosity = newStatus ? 1 : 0; // Assuming 1 means light is on, 0 means light is off
-      await axios.put(endpoints.lightStatus, {
+      await axios.put(endpoints.uptLightStatus, {
         HoursLuminosity: newHoursLuminosity.toString(),
       });
       setLightStatus(newStatus);
-    } catch (err) {
+    } 
+    catch (err) {
       setError('Failed to update light status');
     }
   };
