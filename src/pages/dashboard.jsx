@@ -1,14 +1,19 @@
+// pages/Dashboard.js
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import MainInfo from '../Components/MainInfo';
+import Details from '../Components/Details';
 
-import Logo from '../images/logo.png';
-import Plant from '../images/plant.png';
-import Sun from '../images/sun.png';
-import Light from '../images/light.png';
-import Menu from '../images/menu.png';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -85,21 +90,16 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    // Fetch today's date when component mounts
     const today = new Date();
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     const formattedDate = today.toLocaleDateString('es-es', options);
     setTodayDate(formattedDate);
 
-    // Fetch initial data based on currentSelection
     fetchData(currentSelection);
-
-    // Fetch temperature, humidity, and light status history data
     fetchTemperatureHistory();
     fetchHumidityHistory();
     fetchLightStatus();
 
-    // Retrieve username from local storage
     const storedUsername = localStorage.getItem('name');
     if (storedUsername) {
       setUsername(storedUsername);
@@ -142,70 +142,22 @@ const Dashboard = () => {
     ],
   };
 
-  const navigate = useNavigate();
-
-  const navigateToSettings = () => {
-    navigate('/parameters');
-  };
-
   return (
     <div className='dashboard-cnt'>
-      <div className="main-info">
-        <header>
-          <img src={Logo} alt="SmartClimate logo" className="logo" />
-          <p>SmartClimate</p>
-        </header>
-        <main>
-          <div className="info">
-            <button onClick={handleLeftClick}>‹</button>
-            {data !== null ? (
-              <span>
-                {currentSelection === 'temperature' ? ` Temperatura: ${data}ºC` : ` Humedad: ${data}%`}
-              </span>
-            ) : (
-              <p>Loading...</p>
-            )}
-            <button onClick={handleRightClick}>›</button>
-          </div>
-        </main>
-        <footer>
-          <div className="bg-img">
-            <img src={Plant} alt="" />
-          </div>
-          <div className="date">
-            <p>{todayDate}</p>
-          </div>  
-          <div className="bg-img2">
-            <img src={Sun} alt="" />
-          </div>
-        </footer>
-      </div>
-      <div className="details">
-        <section className='topsection'>
-          <div className="content">
-            <h1>Bienvenido, {username}</h1>
-            <p>Revisa las condiciones de la cámara de germinación:</p>
-          </div>
-          <div className="options" onClick={navigateToSettings}>
-            <img src={Menu} alt="menu settings" />
-          </div>
-        </section>
-        <section className='chart'>
-          <h2>Historial de Temperatura</h2>
-          <Line data={temperatureData} />
-
-          <h2>Historial de Humedad</h2>
-          <Line data={humidityData} />
-        </section>
-        <section className='light'>
-          <h2>Estado Luminosidad:</h2>
-          <img src={Light} alt="" />
-          <p>{lightStatus ? 'Encendido' : 'Apagado'}</p>
-          <button onClick={toggleLightStatus}>
-            {lightStatus ? 'Apagar' : 'Encender'}
-          </button>
-        </section>
-      </div>
+      <MainInfo
+        currentSelection={currentSelection}
+        data={data}
+        todayDate={todayDate}
+        handleLeftClick={handleLeftClick}
+        handleRightClick={handleRightClick}
+      />
+      <Details
+        username={username}
+        temperatureData={temperatureData}
+        humidityData={humidityData}
+        lightStatus={lightStatus}
+        toggleLightStatus={toggleLightStatus}
+      />
     </div>
   );
 };
