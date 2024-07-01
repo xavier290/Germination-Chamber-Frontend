@@ -27,12 +27,14 @@ const Dashboard = () => {
   const [humidityHistory, setHumidityHistory] = useState([]);
   const [lightStatus, setLightStatus] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [soilHumidityHistory, setSoilHumidityHistory] = useState([]);
 
   const endpoints = {
-    temperature: 'https://squid-app-ht2cp.ondigitalocean.app/api/temperature/latest',
-    humidity: 'https://squid-app-ht2cp.ondigitalocean.app/api/humidity/latest',
+    temperature: 'https://squid-app-ht2cp.ondigitalocean.app/api/temperature/latest/',
+    humidity: 'https://squid-app-ht2cp.ondigitalocean.app/api/relative/latest',
     temperatureHistory: 'https://squid-app-ht2cp.ondigitalocean.app/api/temperature/',
-    humidityHistory: 'https://squid-app-ht2cp.ondigitalocean.app/api/humidity/',
+    soilHumidityHistory: 'https://squid-app-ht2cp.ondigitalocean.app/api/humidity/',
+    humidityHistory: 'https://squid-app-ht2cp.ondigitalocean.app/api/relative/',
     lightStatus: 'https://squid-app-ht2cp.ondigitalocean.app/api/parameters/info/666d9c0df2c9716c9211a35f',
     uptLightStatus: 'https://squid-app-ht2cp.ondigitalocean.app/api/parameters/666d9c0df2c9716c9211a35f',
   };
@@ -60,6 +62,16 @@ const Dashboard = () => {
       setError(null);
     } catch (err) {
       setError('Failed to fetch temperature history');
+    }
+  };
+
+  const fetchSoilHumidityHistory = async () => {
+    try {
+      const response = await axios.get(endpoints.soilHumidityHistory);
+      setSoilHumidityHistory(response.data);
+      setError(null);
+    } catch (err) {
+      setError('Failed to fetch soil humidity history');
     }
   };
 
@@ -107,6 +119,7 @@ const Dashboard = () => {
     fetchTemperatureHistory();
     fetchHumidityHistory();
     fetchLightStatus();
+    fetchSoilHumidityHistory(); 
 
     const storedUsername = localStorage.getItem('name');
     if (storedUsername) {
@@ -150,6 +163,18 @@ const Dashboard = () => {
     ],
   };
 
+  const soilHumidityData = {
+    labels: soilHumidityHistory.map((entry) => new Date(entry.Timestamp).toLocaleTimeString()),
+    datasets: [
+      {
+        label: 'Soil Humidity History (%)',
+        data: soilHumidityHistory.map((entry) => entry.Payload),
+        borderColor: 'rgba(255,159,64,1)',
+        backgroundColor: 'rgba(255,159,64,0.2)',
+      },
+    ],
+  };
+
   return (
     <div className='dashboard-cnt'>
       <MainInfo
@@ -164,6 +189,7 @@ const Dashboard = () => {
         username={username}
         temperatureData={temperatureData}
         humidityData={humidityData}
+        soilHumidityData={soilHumidityData}
         lightStatus={lightStatus}
         toggleLightStatus={toggleLightStatus}
       />
